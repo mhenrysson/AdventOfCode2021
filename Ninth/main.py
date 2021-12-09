@@ -11,8 +11,7 @@ class NinthAdvent:
 
     @staticmethod
     def first(inputs):
-        lows = NinthAdvent.get_lows(inputs)
-        return sum([sum(r) for r in lows])
+        return sum([sum(r) for r in NinthAdvent.get_lows(inputs)])
 
     @staticmethod
     def second(inputs):
@@ -31,10 +30,8 @@ class NinthAdvent:
                         for n in range(len(data)):
                             for m in range(len(data[n])):
                                 if basin[n][m]:
-                                    for n_x, n_y in NinthAdvent. \
-                                            get_neighbours(len(data), len(data[0]), n, m):
-                                        n_n = NinthAdvent. \
-                                            get_neighbours(len(data), len(data[0]), n_x, n_y)
+                                    for n_x, n_y in NinthAdvent.get_neighbours(len(data), len(data[0]), n, m):
+                                        n_n = NinthAdvent.get_neighbours(len(data), len(data[0]), n_x, n_y)
                                         if sum([((data[x][y] >= data[n_x][n_y] and not basin[x][y])
                                                  or (data[x][y] <= data[n_x][n_y] and basin[x][y]))
                                                 and data[n_x][n_y] < 9
@@ -64,10 +61,8 @@ class NinthAdvent:
         lows = [[0] * len(i) for i in data]
         for i in range(len(data)):
             for j in range(len(data[i])):
-                if (i == 0 or data[i - 1][j] > data[i][j]) \
-                        and (i == len(data) - 1 or data[i + 1][j] > data[i][j]) \
-                        and (j == 0 or data[i][j - 1] > data[i][j]) \
-                        and (j == len(data[i]) - 1 or data[i][j + 1] > data[i][j]):
+                ns = NinthAdvent.get_neighbours(len(data), len(data[0]), i, j)
+                if all([data[i][j] < data[x][y] for x, y in ns]):
                     lows[i][j] = data[i][j] + 1
         return lows
 
